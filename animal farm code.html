@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Farm Chapters 1-6 Assessment</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #1e293b;
+            --accent: #2563eb;
+            --danger: #dc2626;
+            --warning: #f59e0b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            user-select: none; /* Prevent copying questions */
+        }
+
+        /* Top Header Bar */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-title h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .header-title p {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .header-status {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .timer-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .violation-badge {
+            background-color: var(--danger);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Layout Container */
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+            max-width: 1300px;
+            margin: 24px auto;
+            padding: 0 16px;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Main Content Area */
+        .main-content {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+
+        .instructions {
+            background-color: #eff6ff;
+            border-left: 4px solid var(--accent);
+            padding: 16px;
+            border-radius: 4px;
+            margin-bottom: 24px;
+            font-size: 0.95rem;
+        }
+
+        /* Student Details Form */
+        .student-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .input-group input {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+
+        /* Question Cards */
+        .question-card {
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e293b;
+        }
+
+        .options-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .option-item:hover {
+            background-color: #f1f5f9;
+        }
+
+        .option-item input[type="radio"] {
+            margin-top: 4px;
+            cursor: pointer;
+        }
+
+        .option-label {
+            cursor: pointer;
+            font-size: 0.95rem;
+            flex: 1;
+        }
+
+        /* Sidebar Answer Grid */
+        .sidebar {
+            position: sticky;
+            top: 80px;
+            height: fit-content;
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border);
+        }
+
+        .sidebar h3 {
+            font-size: 1rem;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        .q-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .q-grid-btn {
+            aspect-ratio: 1;
+            border: 1px solid var(--border);
+            background: #f8fafc;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+        }
+
+        .q-grid-btn.answered {
+            background-color: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #15803d;
+        }
+
+        /* Tab Switch Warning Overlay */
+        .overlay-alert {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(220, 38, 38, 0.95);
+            z-index: 9999;
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .overlay-alert.active {
+            display: flex;
+        }
+
+        .overlay-card {
+            background: white;
+            color: var(--text);
+            padding: 32px;
+            border-radius: 12px;
+            max-width: 500px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .overlay-card h2 {
+            color: var(--danger);
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+        }
+
+        .overlay-card p {
+            margin-bottom: 20px;
+            color: #475569;
+        }
+
+        .dismiss-btn {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Results / Submission Summary Screen */
+        .results-summary {
+            display: none;
+            background: white;
+            padding: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .results-summary h2 {
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .summary-table th, .summary-table td {
+            border: 1px solid var(--border);
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .summary-table th {
+            background-color: #f1f5f9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-title">
+            <h1>Summative Assessment: Animal Farm (Chapters 1–6)</h1>
+            <p>Digital Examination Portal</p>
+        </div>
+        <div class="header-status">
+            <div class="violation-badge">Tab Violations: <span id="violationCount">0</span></div>
+            <div class="timer-box" id="timerDisplay">60:00</div>
+        </div>
+    </header>
+
+    <!-- Tab Violation Alert Overlay -->
+    <div class="overlay-alert" id="violationOverlay">
+        <div class="overlay-card">
+            <h2>⚠️ CHEATING WARNING DETECTED</h2>
+            <p>You navigated away from the examination window or switched tabs. This activity has been recorded and logged.</p>
+            <p><strong>Total Tab Violations Recorded: <span id="overlayViolationCount">0</span></strong></p>
+            <button class="dismiss-btn" onclick="acknowledgeWarning()">Return to Examination</button>
+        </div>
+    </div>
+
+    <div class="container" id="examContainer">
+        <!-- Main Question Area -->
+        <main class="main-content">
+            <div class="instructions">
+                <strong>General Instructions:</strong> Read each scenario, excerpt, or scaffold carefully before selecting the best answer for each question. Do not leave the exam window. Tab switching is strictly monitored and flagged.
+            </div>
+
+            <div class="student-info">
+                <div class="input-group">
+                    <label for="studentName">Student Full Name *</label>
+                    <input type="text" id="studentName" placeholder="Enter your full name" required>
+                </div>
+                <div class="input-group">
+                    <label for="studentId">Student ID / Section *</label>
+                    <input type="text" id="studentId" placeholder="Enter ID or Grade/Section" required>
+                </div>
+            </div>
+
+            <form id="examForm">
+                <div id="questionsContainer"></div>
+            </form>
+        </main>
+
+        <!-- Sidebar Answer Tracker -->
+        <aside class="sidebar">
+            <h3>Question Palette</h3>
+            <div class="q-grid" id="questionGrid"></div>
+            <button class="submit-btn" type="button" onclick="confirmSubmission()">Submit Exam</button>
+        </aside>
+    </div>
+
+    <!-- Submission Summary Display -->
+    <div class="container">
+        <div class="results-summary" id="resultsSummary">
+            <h2>Examination Submitted Successfully</h2>
+            <p id="summaryStudentDetails"></p>
+            <p id="summaryViolations"></p>
+            <p id="summaryTimestamp"></p>
+            <h3 style="margin-top:20px;">Submitted Answers Log</h3>
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Q#</th>
+                        <th>Selected Answer</th>
+                    </tr>
+                </thead>
+                <tbody id="summaryTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Raw Assessment Data
+        const questionsData = [
+            { id: 1, text: "In Chapter 1, Old Major gathers all animals in the big barn to deliver a historic speech about his dream and the state of animals in England. According to Old Major, who or what is the sole cause of all the animals' poverty and misery on Manor Farm?", options: ["A) The harsh winter weather and poor soil", "B) Man, who consumes without producing", "C) The laziness of the draft horses", "D) The neighboring farm owners, Pilkington and Frederick"] },
+            { id: 2, text: "At the conclusion of his inspiring speech in Chapter 1, Old Major introduces a song that he remembers from his childhood. What is the title of the revolutionary anthem that becomes the unifying song for Animal Farm?", options: ["A) \"Beasts of England\"", "B) \"Comrade Napoleon\"", "C) \"The Animal Flag Song\"", "D) \"England My England\""] },
+            { id: 3, text: "Following Old Major's death, three young pigs formulate his teachings into a complete system of thought in Chapter 2. What name is given to this philosophical ideology?", options: ["A) Majorism", "B) Animalism", "C) Manor Socialism", "D) Equalitarianism"] },
+            { id: 4, text: "In Chapter 2, Moses the raven tells the animals elaborate stories about a mysterious place where animals go when they die. What is the name of this mythical land described by Moses?", options: ["A) Animal Heaven", "B) Willingdon Pastures", "C) Sugarcandy Mountain", "D) The Green Meadow"] },
+            { id: 5, text: "In Chapter 2, the animals unexpectedly revolt against Mr. Jones and drive him off the farm earlier than anticipated. What immediate event triggers the animals to break into the store-shed and begin the rebellion?", options: ["A) Mr. Jones sells Boxer to a blacksmith", "B) Mr. Jones and his men go out drinking and forget to feed the animals for over a day", "C) Mr. Jones shoots Old Major's skull with his gun", "D) The pigs order an immediate attack at midnight"] },
+            { id: 6, text: "After successfully expelling Mr. Jones in Chapter 2, the pigs reveal they have taught themselves to read and write, and they formulate key rules on the barn wall. How many fundamental Commandments are painted on the wall of the big barn?", options: ["A) Five", "B) Seven", "C) Ten", "D) Twelve"] },
+            { id: 7, text: "During the harvest in Chapter 3, one draft horse works harder than anyone else and takes on the heaviest burdens on the farm. What becomes Boxer's personal motto during the early days of Animal Farm?", options: ["A) \"Pigs are always right\"", "B) \"I will work harder!\"", "C) \"Freedom is worth sweat\"", "D) \"Four legs good, two legs bad\""] },
+            { id: 8, text: "In Chapter 3, the sheep demonstrate difficulty in learning to read and memorizing the full Seven Commandments. To accommodate the simpler animals, Snowball condenses the Seven Commandments into which single maxim?", options: ["A) \"All animals are equal!\"", "B) \"Four legs good, two legs bad!\"", "C) \"No legs bad, two legs superior!\"", "D) \"Animals unite together!\""] },
+            { id: 9, text: "In Chapter 3, the animals discover that the milk and fallen apples are reserved exclusively for the pigs, causing some discontent. Which pig is sent around the farm to explain and justify this privilege to the other animals?", options: ["A) Napoleon", "B) Snowball", "C) Squealer", "D) Minimus"] },
+            { id: 10, text: "In Chapter 4, Mr. Jones attempts to recapture Manor Farm with men from Willingdon and neighboring farms. What is the name given to this famous conflict in animal history?", options: ["A) The Battle of Manor Farm", "B) The Rebellion of October", "C) The Battle of the Cowshed", "D) The Siege of Willingdon"] },
+            { id: 11, text: "During the military conflict in Chapter 4, Snowball leads the defense using tactics he studied from a historical leader. Whose military campaigns did Snowball study to prepare for the defense of the farm?", options: ["A) Alexander the Great", "B) Julius Caesar", "C) Napoleon Bonaparte", "D) Oliver Cromwell"] },
+            { id: 12, text: "Following the battle in Chapter 4, the animals create military decorations to honor heroism in combat. Which decoration is awarded to Snowball and Boxer for their bravery in battle?", options: ["A) \"Animal Hero, First Class\"", "B) \"Order of the Green Banner\"", "C) \"Defender of the Rebellion\"", "D) \"Manor Cross of Honor\""] },
+            { id: 13, text: "At the beginning of Chapter 5, Mollie becomes increasingly disruptive and dissatisfied with life on Animal Farm. What does Clover discover hidden under the straw in Mollie's stall before Mollie disappears?", options: ["A) A copy of human books and extra feed", "B) A stash of lump sugar and ribbons of various colors", "C) A set of iron horseshoes and a whip", "D) Money stolen from Mr. Jones's house"] },
+            { id: 14, text: "In Chapter 5, Snowball proposes a major engineering project on the knoll to modernize the farm and reduce labor. What structure does Snowball plan to build to generate electricity for the farm?", options: ["A) A watermill", "B) A windmill", "C) A steam generator", "D) A grain silo"] },
+            { id: 15, text: "In Chapter 6, as work on the windmill becomes intense, Napoleon announces a change in farm policy regarding human contact. Who is the human solicitor hired to act as an intermediary between Animal Farm and the outside world?", options: ["A) Mr. Pilkington", "B) Mr. Frederick", "C) Mr. Whymper", "D) Mr. Jones"] },
+            { id: 16, text: "In Chapter 6, the pigs move into the farmhouse and begin sleeping in the beds, raising concerns among animals like Clover. How is the Fourth Commandment secretly altered on the barn wall to justify this action?", options: ["A) \"No animal shall sleep in a bed with pillows\"", "B) \"No animal shall sleep in a bed with sheets\"", "C) \"No animal shall sleep in a bed like a human\"", "D) \"No animal shall sleep in a bed inside a house\""] },
+            { id: 17, text: "In Chapter 1, Old Major states: \"Man is the only creature that consumes without producing. He does not give milk, he does not lay eggs, he is too weak to pull the plough...\" How does Old Major use this specific argument to rhetorically motivate the animals toward revolution?", options: ["A) By convincing them that humans are physically inferior and easily defeated in combat.", "B) By establishing a clear common enemy responsible for their exploitation, framing rebellion as a logical necessity.", "C) By arguing that animals should adopt human industrial methods to increase agricultural production.", "D) By proving that farm work is inherently unnatural and should be abolished completely."] },
+            { id: 18, text: "In Chapter 2, when Mollie asks whether there will still be sugar and ribbons after the Rebellion, Snowball replies: \"These ribbons that you are so devoted to are the badge of slavery. Can you not understand that liberty is worth more than ribbons?\" What does this exchange reveal about the fundamental contrast between Mollie's perspective and the pigs' revolutionary goals?", options: ["A) Mollie values personal luxury and status symbols over abstract ideals of freedom.", "B) Snowball secretly wants to keep all ribbons and sugar exclusively for the pig elite.", "C) Mollie is deep down a double agent working directly for Mr. Jones.", "D) Snowball fails to realize that ribbons are necessary for working horses."] },
+            { id: 19, text: "At the end of Chapter 2, five buckets of rich milk are drawn from the cows. When the animals ask what will happen to the milk, Napoleon steps in front of the buckets and says, \"Never mind the milk, comrades! That will be attended to.\" When they return from the harvest, the milk has vanished. What does this situational event foreshadow regarding the future leadership of Animal Farm?", options: ["A) The farm will suffer from severe food shortages due to bad planning.", "B) Napoleon will prioritize agricultural efficiency over dairy production.", "C) The pigs will gradually exploit their leadership position for personal gain at the expense of others.", "D) Snowball and Napoleon will collaborate equally to distribute luxury goods."] },
+            { id: 20, text: "In Chapter 3, while Snowball spends time organizing committees (e.g., Wild Comrades Re-education Committee), Napoleon takes the newly born puppies from Jessie and Bluebell into isolation, claiming he will make himself responsible for their education. How does Napoleon's educational approach differ analytically from Snowball's, and what are its political implications?", options: ["A) Napoleon focuses on higher literacy, while Snowball focuses on physical labor.", "B) Napoleon focuses on indoctrination and military force through a small group, while Snowball tries to educate the masses democratic style.", "C) Napoleon believes in public transparency, whereas Snowball operates in total secrecy.", "D) Napoleon prefers theoretical education, whereas Snowball prefers practical farm training."] },
+            { id: 21, text: "In Chapter 3, Squealer justifies the pigs' exclusive consumption of milk and apples by claiming: \"It is for YOUR sake that we drink that milk and eat those apples... Do you know what would happen if we pigs failed in our duty? Jones would come back!\" Which logical error or manipulative tactic is Squealer using here to suppress disagreement?", options: ["A) False dilemma (either let pigs have apples or Mr. Jones returns) combined with fear appeals.", "B) Ad hominem attacks directly insulting the intelligence of the working horses.", "C) Circular reasoning asserting that milk has medical benefits backed by scientific consensus.", "D) Appeal to tradition by reminding animals of historical farm management under Major."] },
+            { id: 22, text: "In Chapter 4, Mr. Pilkington of Foxwood and Mr. Frederick of Pinchfield are frightened by the rebellion on Animal Farm and attempt to prevent their own animals from learning about it. What does the reaction of Pilkington and Frederick reveal about the international/broader political impact of the Animal Rebellion?", options: ["A) Ruling elites fear revolutionary ideas spreading to their own populations and disrupting their power structure.", "B) Human farmers respect animal rights and seek to negotiate fair trade agreements.", "C) Neighboring farmers view the rebellion as a harmless temporary fad that will collapse naturally.", "D) Neighboring farmers plan to unite under a single global government to protect animal welfare."] },
+            { id: 23, text: "During the Battle of the Cowshed in Chapter 4, Boxer strikes a stable-lad on the head, rendering him unconscious. Boxer expresses deep remorse, saying: \"I have no wish to take life, not even human life.\" Snowball responds: \"No sentimentality, comrade! War is war. The only good human being is a dead one.\" What does this interaction highlight about the moral contrast between Boxer and Snowball?", options: ["A) Boxer is weak-willed, whereas Snowball is a pacifist who avoids violence.", "B) Boxer maintains individual empathy and human ethics, whereas Snowball prioritizes political/ideological goals over human life.", "C) Boxer supports Mr. Jones, whereas Snowball seeks total destruction of all neighboring farms.", "D) Boxer values military honor, while Snowball encourages cowardice in battle."] },
+            { id: 24, text: "In Chapter 5, Snowball and Napoleon disagree on every issue where disagreement is possible, particularly regarding farm defense. Snowball argues for sending out pigeons to stir up rebellion on other farms, while Napoleon argues for procuring firearms and training themselves in their use. Evaluating their strategic philosophies, how do their approaches to security differ?", options: ["A) Snowball believes in ideological expansion (exporting revolution), while Napoleon favors militarized isolationism (building internal force).", "B) Snowball advocates surrender to humans, while Napoleon seeks complete isolation from all technology.", "C) Snowball relies on human alliances, while Napoleon relies on animal solidarity across England.", "D) Snowball wants to arm every animal, while Napoleon wants to disarm the farm completely."] },
+            { id: 25, text: "During the debate over the windmill in Chapter 5, just as Snowball finishes an impassioned speech that moves the animals to favor his plan, Napoleon utters a high-pitched whimper, bringing nine enormous dogs bounding into the barn to chase Snowball off the property. What critical shift in the political structure of Animal Farm occurs at this exact moment?", options: ["A) A shift from a military dictatorship to a direct democracy.", "B) A transition from democratic debate and consensus to totalitarian rule enforced by violence.", "C) The abolition of pig rule and the establishment of a council of horses.", "D) The formal surrender of Animal Farm to Mr. Whymper."] },
+            { id: 26, text: "Shortly after Snowball's expulsion in Chapter 5, Napoleon announces that Sunday morning debates will be abolished and replaced by a special committee of pigs meeting in private. How does Squealer defend this reduction of democracy when animals express unease?", options: ["A) He argues that democracy takes too much time away from farm productivity.", "B) He frames leadership as a heavy, unselfish burden and warns that free speech might lead to wrong decisions like following Snowball.", "C) He claims that Old Major's original vision explicitly forbade voting and public debate.", "D) He proves that the sheep are the only ones qualified to make farm decisions."] },
+            { id: 27, text: "In Chapter 5, three weeks after Snowball is chased away, Napoleon announces that the windmill will be built after all. Squealer explains privately that Napoleon had actually advocated for the windmill from the beginning and that Snowball had stolen the plans from Napoleon's papers. What technique of authoritarian rule is demonstrated by Squealer's revision of the windmill's origin?", options: ["A) Historical revisionism (rewriting history to consolidate political authority and discredit political rivals).", "B) Economic transparency designed to boost worker morale.", "C) Objective historical analysis based on documented physical evidence.", "D) Democratic consensus-building to encourage teamwork."] },
+            { id: 28, text: "Throughout Chapter 6, the animals work sixty hours a week building the windmill. Napoleon announces that work on Sunday afternoons is \"strictly voluntary,\" but any animal who absents himself will have his rations reduced by half. Which statement best analyzes the irony and reality behind Napoleon's \"strictly voluntary\" policy?", options: ["A) The policy empowers animals by giving them full freedom over their schedules.", "B) It is an illusion of choice; coercing labor through starvation renders \"voluntary\" meaningful in name only.", "C) Sunday labor is actually illegal under the Seven Commandments, making Napoleon's statement a total mistake.", "D) The animals prefer working on Sundays because they receive double rations in return."] },
+            { id: 29, text: "In Chapter 6, when Napoleon engages in trade with Mr. Whymper to acquire materials for the windmill, some animals remember early resolutions against interacting with humans or engaging in trade. How does the pig leadership handle the animals' vague memories of these earlier prohibitions?", options: ["A) They admit breaking the rule but argue that survival requires compromises.", "B) Squealer convinces them that no such resolution was ever written or passed, attributing it to rumors spread by Snowball.", "C) They call a general vote to formally repeal the prohibition against trade.", "D) They punish any animal who mentions trade by exiling them from the farm."] },
+            { id: 30, text: "In Chapter 6, a severe storm in November knocks down the half-finished windmill, destroying months of hard labor. Napoleon walks around the ruins and immediately declares that Snowball snuck onto the farm at night and destroyed it. Why is blaming Snowball for the windmill's destruction an effective political strategy for Napoleon?", options: ["A) It diverts responsibility from engineering failures and gives the animals a common scapegoat to fear and unite against.", "B) It accurately reflects the undeniable physical evidence found at the scene of the collapse.", "C) It forces Mr. Whymper to pay for the structural damages out of his own pocket.", "D) It convinces the animals to abandon the windmill project permanently and focus on food production."] },
+            { id: 31, text: "Consider Old Major's assertion in Chapter 1: \"Remember also that in fighting against Man, we must not come to resemble him.\" Evaluating the events through Chapter 6, which event provides the strongest evidence that the pigs are directly violating Old Major's warning?", options: ["A) The animals singing \"Beasts of England\" every Sunday morning.", "B) The pigs moving into the farmhouse, sleeping in beds, and trading with human merchants.", "C) Boxer pushing himself to exhaustion to drag heavy stones up the quarry hill.", "D) Snowball drawing elaborate architectural blueprints on the shed floor."] },
+            { id: 32, text: "In Chapter 3, the sheep demonstrate an inability to learn the Seven Commandments, repeating instead: \"Four legs good, two legs bad!\" for hours on end, often interrupting discussions. How do the pigs politically exploit the sheep's low literacy and repetitive chanting throughout Chapters 3-6?", options: ["A) They train the sheep to write new agricultural manuals for the farm.", "B) They use the sheep's chants to drown out dissent and interrupt genuine debate during farm meetings.", "C) They appoint the sheep as executive judges on the farm council.", "D) They trade the sheep to Mr. Pilkington in exchange for building supplies."] },
+            { id: 33, text: "In Chapter 4, after the Battle of the Cowshed, Boxer is deeply distressed because he thinks he killed a human stable-boy, whereas Snowball insists that \"the only good human being is a dead one.\" What does this contrast reveal about how total adherence to revolutionary ideology affects personal morality?", options: ["A) Ideology can dehumanize opponents and erase ethical boundaries, whereas individual conscience retains empathy.", "B) Revolutionary ideology elevates human sympathy above tactical necessity in all circumstances.", "C) Moral hesitation is necessary to win military victories against superior forces.", "D) Boxer's reaction shows that he secretly harbors loyalty to human farm owners."] },
+            { id: 34, text: "In Chapter 5, Benjamin the donkey refuses to take sides on the windmill debate, offering only the cryptic remark: \"Windmill or no windmill, life will go on as it has always gone on-that is, badly.\" What philosophical perspective does Benjamin represent in the allegory, and how does his attitude affect the outcome of events?", options: ["A) Naive optimism; his belief in steady progress encourages the animals to work without complaint.", "B) Cynical detachment; his refusal to act or speak up allows totalitarian control to develop unchallenged.", "C) Radical revolutionism; his secret plotting against the pigs destabilizes the farm's security.", "D) Blind loyalty; his unquestioning obedience to Napoleon ensures smooth governance."] },
+            { id: 35, text: "In Chapter 6, the animals feel proud when they see Napoleon giving orders to Mr. Whymper, noting: \"Nevertheless, the sight of Napoleon, on all fours, delivering orders to Whymper, who stood on two legs, roused their pride and reconciled them largely to the new arrangement.\" What psychological phenomenon allows the animals to accept their ongoing exploitation by the pigs?", options: ["A) Nationalistic pride and political self-deception override their awareness of physical hardship and loss of rights.", "B) Financial prosperity created by trading surplus grain with neighboring farms.", "C) Complete understanding and approval of capitalist market mechanics.", "D) Fear of physical punishment from Mr. Whymper if orders are not fulfilled."] }
+        ];
+
+        let violationCount = 0;
+        let audioCtx = null;
+        let alarmInterval = null;
+        let examTimeSeconds = 60 * 60; // 60 minutes default
+
+        // Render Questions and Sidebar Grid
+        function renderExam() {
+            const container = document.getElementById('questionsContainer');
+            const grid = document.getElementById('questionGrid');
+
+            questionsData.forEach((q) => {
+                // Question Card
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `q-card-${q.id}`;
+
+                const title = document.createElement('div');
+                title.className = 'question-text';
+                title.innerText = `${q.id}. ${q.text}`;
+                card.appendChild(title);
+
+                const optList = document.createElement('ul');
+                optList.className = 'options-list';
+
+                q.options.forEach((opt, optIdx) => {
+                    const optLetter = ["A", "B", "C", "D"][optIdx];
+                    const li = document.createElement('li');
+                    li.className = 'option-item';
+
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `q_${q.id}`;
+                    radio.id = `q_${q.id}_${optLetter}`;
+                    radio.value = optLetter;
+                    radio.onchange = () => markAnswered(q.id);
+
+                    const label = document.createElement('label');
+                    label.className = 'option-label';
+                    label.htmlFor = `q_${q.id}_${optLetter}`;
+                    label.innerText = opt;
+
+                    li.appendChild(radio);
+                    li.appendChild(label);
+                    optList.appendChild(li);
+                });
+
+                card.appendChild(optList);
+                container.appendChild(card);
+
+                // Sidebar Navigation Button
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'q-grid-btn';
+                btn.id = `grid-btn-${q.id}`;
+                btn.innerText = q.id;
+                btn.onclick = () => {
+                    document.getElementById(`q-card-${q.id}`).scrollIntoView({ behavior: 'smooth' });
+                };
+                grid.appendChild(btn);
+            });
+        }
+
+        function markAnswered(qId) {
+            const btn = document.getElementById(`grid-btn-${qId}`);
+            if (btn) btn.classList.add('answered');
+        }
+
+        // Tab Switching & Anti-Cheating Monitoring
+        function playAlarmSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(880, audioCtx.currentTime); // High pitch alarm tone
+                gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.4);
+            } catch (e) {
+                console.error("Audio error", e);
+            }
+        }
+
+        function triggerViolation() {
+            violationCount++;
+            document.getElementById('violationCount').innerText = violationCount;
+            document.getElementById('overlayViolationCount').innerText = violationCount;
+            document.getElementById('violationOverlay').classList.add('active');
+
+            // Play pulsating alarm sound
+            playAlarmSound();
+            if (!alarmInterval) {
+                alarmInterval = setInterval(playAlarmSound, 600);
+            }
+        }
+
+        function acknowledgeWarning() {
+            document.getElementById('violationOverlay').classList.remove('active');
+            if (alarmInterval) {
+                clearInterval(alarmInterval);
+                alarmInterval = null;
+            }
+        }
+
+        // Page Visibility and Blur Listeners
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                triggerViolation();
+            }
+        });
+
+        window.addEventListener('blur', () => {
+            triggerViolation();
+        });
+
+        // Timer Functionality
+        function startTimer() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            const timer = setInterval(() => {
+                if (examTimeSeconds <= 0) {
+                    clearInterval(timer);
+                    alert("Time is up! Your exam will now be submitted automatically.");
+                    submitExam();
+                } else {
+                    examTimeSeconds--;
+                    const mins = Math.floor(examTimeSeconds / 60);
+                    const secs = examTimeSeconds % 60;
+                    timerDisplay.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        }
+
+        function confirmSubmission() {
+            const sName = document.getElementById('studentName').value.trim();
+            const sId = document.getElementById('studentId').value.trim();
+
+            if (!sName || !sId) {
+                alert("Please complete your Full Name and Student ID/Section before submitting.");
+                return;
+            }
+
+            if (confirm("Are you sure you want to finalize and submit your examination?")) {
+                submitExam();
+            }
+        }
+
+        function submitExam() {
+            document.getElementById('examContainer').style.display = 'none';
+            const summaryScreen = document.getElementById('resultsSummary');
+            summaryScreen.style.display = 'block';
+
+            const sName = document.getElementById('studentName').value || "N/A";
+            const sId = document.getElementById('studentId').value || "N/A";
+
+            document.getElementById('summaryStudentDetails').innerText = `Student: ${sName} | ID/Section: ${sId}`;
+            document.getElementById('summaryViolations').innerText = `Total Recorded Tab Violations: ${violationCount}`;
+            document.getElementById('summaryTimestamp').innerText = `Submitted at: ${new Date().toLocaleString()}`;
+
+            const tbody = document.getElementById('summaryTableBody');
+            tbody.innerHTML = '';
+
+            questionsData.forEach(q => {
+                const selectedOpt = document.querySelector(`input[name="q_${q.id}"]:checked`);
+                const answerVal = selectedOpt ? selectedOpt.value : "UNANSWERED";
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>Question ${q.id}</td><td><strong>${answerVal}</strong></td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Initialize Exam
+        window.onload = () => {
+            renderExam();
+            startTimer();
+        };
+    </script>
+</body>
+</html>
